@@ -1,4 +1,3 @@
-import { Filter__OLD, FiltersService } from '../services/filters.service';
 import { GroupBy } from '../services/grouping/grouping-context.service';
 import { Filter } from './filter.model';
 import { Repo } from './repo.model';
@@ -45,7 +44,7 @@ export abstract class Preset<T> {
   }
 }
 
-export class GlobalPreset extends Preset<Partial<Filter__OLD>> {
+export class GlobalPreset extends Preset<Partial<Filter>> {
   constructor({
     repo,
     filter,
@@ -54,7 +53,7 @@ export class GlobalPreset extends Preset<Partial<Filter__OLD>> {
     groupBy
   }: {
     repo: Repo;
-    filter: Partial<Filter__OLD>;
+    filter: Partial<Filter>;
     label: string;
     id?: string;
     groupBy: GroupBy;
@@ -83,7 +82,7 @@ export class GlobalPreset extends Preset<Partial<Filter__OLD>> {
   }
 }
 
-export class LocalPreset extends Preset<Filter__OLD> {
+export class LocalPreset extends Preset<Filter> {
   constructor({
     repo,
     filter,
@@ -92,7 +91,7 @@ export class LocalPreset extends Preset<Filter__OLD> {
     groupBy
   }: {
     repo: Repo;
-    filter: Filter__OLD;
+    filter: Filter;
     label: string;
     id?: string;
     groupBy: GroupBy;
@@ -105,7 +104,7 @@ export class LocalPreset extends Preset<Filter__OLD> {
     const repo = Repo.fromObject(object.repo);
 
     // TODO: When refactoring out filter, we will want to have tow different methods for fromObject
-    const filter = Filter.fromObject(object.filter, false) as Filter__OLD;
+    const filter = Filter.fromObject(object.filter, false) as Filter;
 
     const label = object.label;
 

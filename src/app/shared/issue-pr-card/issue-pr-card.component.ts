@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Issue } from '../../core/models/issue.model';
-import { Filter__OLD } from '../../core/services/filters.service';
 import { GithubService } from '../../core/services/github.service';
 import { LabelService } from '../../core/services/label.service';
 import { LoggingService } from '../../core/services/logging.service';
 import { MilestoneService } from '../../core/services/milestone.service';
+import { Filter } from '../../core/models/filter.model';
 
 @Component({
   selector: 'app-issue-pr-card',
@@ -13,7 +13,7 @@ import { MilestoneService } from '../../core/services/milestone.service';
 })
 export class IssuePrCardComponent {
   @Input() issue: Issue;
-  @Input() filter?: Filter__OLD;
+  @Input() filter?: Filter;
 
   constructor(
     private logger: LoggingService,

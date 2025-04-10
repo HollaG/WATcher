@@ -27,19 +27,6 @@ import { MilestoneService } from './milestone.service';
 
 import { Filter } from '../models/filter.model';
 
-export type Filter__OLD = {
-  title: string;
-  status: string[];
-  type: string;
-  sort: Sort;
-  labels: string[];
-  milestones: string[];
-  hiddenLabels: Set<string>;
-  deselectedLabels: Set<string>;
-  itemsPerPage: number;
-  assignees: string[];
-};
-
 type QueryParams = {
   [x: string]: any;
 };
@@ -172,7 +159,6 @@ export class FiltersService {
 
   initializeFromURLParams() {
     const nextFilter: Filter = Filter.default();
-    // const nextFilter: Filter__OLD = FiltersService.DEFAULT_FILTER;
     const queryParams = this.route.snapshot.queryParamMap;
     try {
       for (const filterName of Object.keys(nextFilter)) {

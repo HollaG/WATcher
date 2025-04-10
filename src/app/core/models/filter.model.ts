@@ -108,6 +108,8 @@ export class Filter {
         assignees: object.assignees || []
       };
 
+      // TOOD: convert to Filter Class
+
       return filter;
     }
   }
@@ -264,3 +266,14 @@ export class Filter {
     }
   }
 }
+
+/**
+ * PartialFilter is a type that contains only some of the properties of Filter,
+ * but still having all the original methods.
+ */
+type PartialFilter = {
+  [K in keyof Filter as Filter[K] extends Function ? K : never]: Filter[K];
+} &
+  {
+    [K in keyof Filter as Filter[K] extends Function ? never : K]?: Filter[K];
+  };

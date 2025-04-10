@@ -1,5 +1,5 @@
+import { Filter } from '../../core/models/filter.model';
 import { Issue } from '../../core/models/issue.model';
-import { Filter__OLD } from '../../core/services/filters.service';
 
 type StatusInfo = {
   type: string;
@@ -21,7 +21,7 @@ const infoFromStatus = (statusString: string): StatusInfo => {
  * This functions returns the data passed in after all the filters of dropdownFilters are applied
  */
 export function applyDropdownFilter(
-  filter: Filter__OLD,
+  filter: Filter,
   data: Issue[],
   isFilteringByMilestone: boolean,
   isFilteringByAssignee: boolean
@@ -51,7 +51,7 @@ export function applyDropdownFilter(
   return filteredData;
 }
 
-function isFilteredByAssignee(filter: Filter__OLD, issue: Issue): boolean {
+function isFilteredByAssignee(filter: Filter, issue: Issue): boolean {
   if (issue.issueOrPr === 'Issue') {
     return (
       filter.assignees.some((assignee) => issue.assignees.includes(assignee)) ||

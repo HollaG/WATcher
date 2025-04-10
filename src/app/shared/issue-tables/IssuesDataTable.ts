@@ -7,7 +7,7 @@ import { Group } from '../../core/models/github/group.interface';
 import { Issue } from '../../core/models/issue.model';
 import { Milestone } from '../../core/models/milestone.model';
 import { AssigneeService } from '../../core/services/assignee.service';
-import { Filter__OLD, FiltersService } from '../../core/services/filters.service';
+import { FiltersService } from '../../core/services/filters.service';
 import { GroupingContextService } from '../../core/services/grouping/grouping-context.service';
 import { IssueService } from '../../core/services/issue.service';
 import { MilestoneService } from '../../core/services/milestone.service';
@@ -26,7 +26,7 @@ export class IssuesDataTable extends DataSource<Issue> implements FilterableSour
 
   public isLoading$ = this.issueService.isLoading.asObservable();
 
-  private static isGroupInFilter(group: Group, filter: Filter__OLD): boolean {
+  private static isGroupInFilter(group: Group, filter: Filter): boolean {
     const groupFilterAsGithubUser = filter.assignees.map((selectedAssignee) => {
       return GithubUser.fromUsername(selectedAssignee);
     });
@@ -112,11 +112,11 @@ export class IssuesDataTable extends DataSource<Issue> implements FilterableSour
       });
   }
 
-  get filter(): Filter__OLD {
+  get filter(): Filter {
     return this.filterChange.value;
   }
 
-  set filter(filter: Filter__OLD) {
+  set filter(filter: Filter) {
     this.filterChange.next(filter);
   }
 }

@@ -2,7 +2,7 @@
  * This module aims to abstract out classes that can be filtered
  */
 
-import { Filter__OLD } from '../../core/services/filters.service';
+import { Filter } from '../../core/models/filter.model';
 
 /**
  * FilterableSource is an interface that contains a source that can be filtered
@@ -11,7 +11,7 @@ import { Filter__OLD } from '../../core/services/filters.service';
  * and applies the filter when these variables are changed.
  */
 export interface FilterableSource {
-  filter: Filter__OLD;
+  filter: Filter;
 }
 
 /**

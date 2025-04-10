@@ -3,8 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { EitherOrPreset, GlobalPreset, LocalPreset, Preset } from '../models/preset.model';
 import { Repo } from '../models/repo.model';
 import { ErrorHandlingService } from './error-handling.service';
-import { ErrorMessageService } from './error-message.service';
-import { Filter__OLD, FiltersService } from './filters.service';
+import { FiltersService } from './filters.service';
 import { GroupBy, GroupingContextService } from './grouping/grouping-context.service';
 import { LoggingService } from './logging.service';
 import { Filter } from '../models/filter.model';
@@ -134,7 +133,7 @@ export class PresetsService {
   ): EitherOrPreset {
     const repoKey = repo.toString();
     const { label, isGlobal } = data;
-    const filter: Filter__OLD = { ...this.filter.filter$.value };
+    const filter: Filter = { ...this.filter.filter$.value };
 
     // For Global Presets, we save them under the "global" key.
     if (isGlobal) {
