@@ -4,9 +4,10 @@ import { EitherOrPreset, GlobalPreset, LocalPreset, Preset } from '../models/pre
 import { Repo } from '../models/repo.model';
 import { ErrorHandlingService } from './error-handling.service';
 import { ErrorMessageService } from './error-message.service';
-import { Filter, FiltersService } from './filters.service';
+import { Filter__OLD, FiltersService } from './filters.service';
 import { GroupBy, GroupingContextService } from './grouping/grouping-context.service';
 import { LoggingService } from './logging.service';
+import { Filter } from '../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +76,7 @@ export class PresetsService {
     this.filter.filter$.subscribe((filter) => {
       // check to see if it's a local preset first
       const localPreset = this.availablePresets$.value.find(
-        (p) => FiltersService.isPartOfPreset(filter, p) && this.groupingContextService.currGroupBy === p.groupBy
+        (p) => Filter.isPartOfPreset(filter, p) && this.groupingContextService.currGroupBy === p.groupBy
       );
       if (localPreset) {
         this.logger.info(`PresetsService: Found a matching local preset from a change in filters`, localPreset);
@@ -85,7 +86,7 @@ export class PresetsService {
       }
 
       const globalPreset = this.globalPresets$.value.find(
-        (p) => FiltersService.isPartOfPreset(filter, p) && this.groupingContextService.currGroupBy === p.groupBy
+        (p) => Filter.isPartOfPreset(filter, p) && this.groupingContextService.currGroupBy === p.groupBy
       );
       if (globalPreset) {
         this.logger.info(`PresetsService: Found a matching global preset from a change in filters`, globalPreset);
@@ -133,7 +134,7 @@ export class PresetsService {
   ): EitherOrPreset {
     const repoKey = repo.toString();
     const { label, isGlobal } = data;
-    const filter: Filter = { ...this.filter.filter$.value };
+    const filter: Filter__OLD = { ...this.filter.filter$.value };
 
     // For Global Presets, we save them under the "global" key.
     if (isGlobal) {
@@ -199,7 +200,7 @@ export class PresetsService {
     // }
 
     // copy the filter into a new object so it is not a refernnce
-    const newFilter = FiltersService.createDeepCopy(preset.filter);
+    const newFilter = Filter.createDeepCopy(preset.filter);
 
     this.logger.info(`PresetsService: Changing to preset`, preset);
 

@@ -1,5 +1,6 @@
-import { Filter, FiltersService } from '../services/filters.service';
+import { Filter__OLD, FiltersService } from '../services/filters.service';
 import { GroupBy } from '../services/grouping/grouping-context.service';
+import { Filter } from './filter.model';
 import { Repo } from './repo.model';
 
 /**
@@ -44,7 +45,7 @@ export abstract class Preset<T> {
   }
 }
 
-export class GlobalPreset extends Preset<Partial<Filter>> {
+export class GlobalPreset extends Preset<Partial<Filter__OLD>> {
   constructor({
     repo,
     filter,
@@ -53,7 +54,7 @@ export class GlobalPreset extends Preset<Partial<Filter>> {
     groupBy
   }: {
     repo: Repo;
-    filter: Partial<Filter>;
+    filter: Partial<Filter__OLD>;
     label: string;
     id?: string;
     groupBy: GroupBy;
@@ -64,7 +65,7 @@ export class GlobalPreset extends Preset<Partial<Filter>> {
 
   static fromObject(object: any): GlobalPreset {
     const repo = Repo.fromObject(object.repo);
-    const filter = FiltersService.fromObject(object.filter, true);
+    const filter = Filter.fromObject(object.filter, true);
     const label = object.label;
 
     const groupBy = object.groupBy || GroupBy.Assignee;
@@ -82,7 +83,7 @@ export class GlobalPreset extends Preset<Partial<Filter>> {
   }
 }
 
-export class LocalPreset extends Preset<Filter> {
+export class LocalPreset extends Preset<Filter__OLD> {
   constructor({
     repo,
     filter,
@@ -91,7 +92,7 @@ export class LocalPreset extends Preset<Filter> {
     groupBy
   }: {
     repo: Repo;
-    filter: Filter;
+    filter: Filter__OLD;
     label: string;
     id?: string;
     groupBy: GroupBy;
@@ -104,7 +105,7 @@ export class LocalPreset extends Preset<Filter> {
     const repo = Repo.fromObject(object.repo);
 
     // TODO: When refactoring out filter, we will want to have tow different methods for fromObject
-    const filter = FiltersService.fromObject(object.filter, false) as Filter;
+    const filter = Filter.fromObject(object.filter, false) as Filter__OLD;
 
     const label = object.label;
 

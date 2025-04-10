@@ -15,7 +15,7 @@ export class Filter {
   itemsPerPage: number;
   assignees: string[];
 
-  private static readonly DEFAULT_ITEMS_PER_PAGE = 20;
+  public static readonly DEFAULT_ITEMS_PER_PAGE = 20;
 
   constructor({
     title,

@@ -7,7 +7,7 @@ import { Group } from '../../core/models/github/group.interface';
 import { Issue } from '../../core/models/issue.model';
 import { Milestone } from '../../core/models/milestone.model';
 import { AssigneeService } from '../../core/services/assignee.service';
-import { Filter, FiltersService } from '../../core/services/filters.service';
+import { Filter__OLD, FiltersService } from '../../core/services/filters.service';
 import { GroupingContextService } from '../../core/services/grouping/grouping-context.service';
 import { IssueService } from '../../core/services/issue.service';
 import { MilestoneService } from '../../core/services/milestone.service';
@@ -16,16 +16,17 @@ import { FilterableSource } from './filterableTypes';
 import { paginateData } from './issue-paginator';
 import { applySort } from './issue-sorter';
 import { applySearchFilter } from './search-filter';
+import { Filter } from '../../core/models/filter.model';
 
 export class IssuesDataTable extends DataSource<Issue> implements FilterableSource {
   public count = 0;
-  private filterChange = new BehaviorSubject(FiltersService.DEFAULT_FILTER);
+  private filterChange = new BehaviorSubject(Filter.default());
   private issuesSubject = new BehaviorSubject<Issue[]>([]);
   private issueSubscription: Subscription;
 
   public isLoading$ = this.issueService.isLoading.asObservable();
 
-  private static isGroupInFilter(group: Group, filter: Filter): boolean {
+  private static isGroupInFilter(group: Group, filter: Filter__OLD): boolean {
     const groupFilterAsGithubUser = filter.assignees.map((selectedAssignee) => {
       return GithubUser.fromUsername(selectedAssignee);
     });
@@ -111,11 +112,11 @@ export class IssuesDataTable extends DataSource<Issue> implements FilterableSour
       });
   }
 
-  get filter(): Filter {
+  get filter(): Filter__OLD {
     return this.filterChange.value;
   }
 
-  set filter(filter: Filter) {
+  set filter(filter: Filter__OLD) {
     this.filterChange.next(filter);
   }
 }

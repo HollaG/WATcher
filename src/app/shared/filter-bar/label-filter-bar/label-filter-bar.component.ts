@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { SimpleLabel } from '../../../core/models/label.model';
-import { Filter, FiltersService } from '../../../core/services/filters.service';
+import { Filter__OLD, FiltersService } from '../../../core/services/filters.service';
 import { LabelService } from '../../../core/services/label.service';
 import { LoggingService } from '../../../core/services/logging.service';
 
@@ -27,7 +27,7 @@ export class LabelFilterBarComponent implements OnInit, AfterViewInit, OnDestroy
   labelSubscription: Subscription;
 
   constructor(private labelService: LabelService, private logger: LoggingService, private filtersService: FiltersService) {
-    this.filtersService.filter$.subscribe((filter: Filter) => {
+    this.filtersService.filter$.subscribe((filter: Filter__OLD) => {
       if (this.loaded === false) {
         return;
       }
