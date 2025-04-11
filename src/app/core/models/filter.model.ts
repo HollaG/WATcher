@@ -17,6 +17,9 @@ export class Filter {
 
   public static readonly DEFAULT_ITEMS_PER_PAGE = 20;
 
+  // constructor with nothing, for PartialFilters
+  constructor();
+  // constructor with everything, for full filters
   constructor({
     title,
     status,
@@ -39,7 +42,34 @@ export class Filter {
     deselectedLabels: Set<string>;
     itemsPerPage: number;
     assignees: string[];
-  }) {
+  });
+
+  constructor({
+    title,
+    status,
+    type,
+    sort,
+    labels,
+    milestones,
+    hiddenLabels,
+    deselectedLabels,
+    itemsPerPage,
+    assignees
+  }:
+    | {
+        title?: string;
+        status?: string[];
+        type?: string;
+        sort?: Sort;
+        labels?: string[];
+        milestones?: string[];
+        hiddenLabels?: Set<string>;
+        deselectedLabels?: Set<string>;
+        itemsPerPage?: number;
+        assignees?: string[];
+      }
+    | undefined = {}) {
+    // constructor with nothing, for PartialFilters
     this.title = title;
     this.status = status;
     this.type = type;
@@ -51,6 +81,13 @@ export class Filter {
     this.itemsPerPage = itemsPerPage || 10;
     this.assignees = assignees || [];
   }
+
+  // public assignProperty(property: keyof Filter, value: any): void {
+  //   // @ts-ignore
+  //   this[property] = value;
+  // }
+
+  // public moo()
 
   static default(): Filter {
     return new Filter({
@@ -73,14 +110,14 @@ export class Filter {
    * @param object The object to create from e.g. from LocalStorage
    * @returns
    */
-  static fromObject(object: any, isGlobal = false): Partial<Filter> | Filter {
+  static fromObject(object: any, isGlobal = false): PartialFilter | Filter {
     if (isGlobal) {
       // required fields: status, type, sort, itemsPerPage
       if (!object.status || !object.type || !object.sort || !object.itemsPerPage) {
         throw new Error(ErrorMessageService.corruptPresetMessage());
       }
 
-      const filter: Partial<Filter> = {
+      const filter: PartialFilter = {
         title: object.title,
         status: object.status,
         type: object.type,
@@ -213,8 +250,9 @@ export class Filter {
    * @param original
    * @returns A deep copied version of the filter
    */
-  public static createDeepCopy(original: Filter | Partial<Filter>): Filter | Partial<Filter> {
-    const filter: Partial<Filter> = {};
+  public static createDeepCopy(original: Filter | PartialFilter): Filter | PartialFilter {
+    // const filter: PartialFilter = {};
+    const filter: PartialFilter = Object.assign(new Filter(), {});
 
     if (original.title !== undefined) {
       // string can be empty, is falsy value
@@ -260,7 +298,7 @@ export class Filter {
     const isPartial = Object.keys(original).length !== Object.keys(Filter.default()).length;
 
     if (isPartial) {
-      return filter as Partial<Filter>;
+      return filter as PartialFilter;
     } else {
       return filter as Filter;
     }
@@ -271,7 +309,7 @@ export class Filter {
  * PartialFilter is a type that contains only some of the properties of Filter,
  * but still having all the original methods.
  */
-type PartialFilter = {
+export type PartialFilter = {
   [K in keyof Filter as Filter[K] extends Function ? K : never]: Filter[K];
 } &
   {

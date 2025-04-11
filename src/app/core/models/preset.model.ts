@@ -1,5 +1,5 @@
 import { GroupBy } from '../services/grouping/grouping-context.service';
-import { Filter } from './filter.model';
+import { Filter, PartialFilter } from './filter.model';
 import { Repo } from './repo.model';
 
 /**
@@ -44,7 +44,7 @@ export abstract class Preset<T> {
   }
 }
 
-export class GlobalPreset extends Preset<Partial<Filter>> {
+export class GlobalPreset extends Preset<PartialFilter> {
   constructor({
     repo,
     filter,
@@ -53,7 +53,7 @@ export class GlobalPreset extends Preset<Partial<Filter>> {
     groupBy
   }: {
     repo: Repo;
-    filter: Partial<Filter>;
+    filter: PartialFilter;
     label: string;
     id?: string;
     groupBy: GroupBy;

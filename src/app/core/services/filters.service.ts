@@ -25,7 +25,7 @@ import { ErrorMessageService } from './error-message.service';
 import { LoggingService } from './logging.service';
 import { MilestoneService } from './milestone.service';
 
-import { Filter } from '../models/filter.model';
+import { Filter, PartialFilter } from '../models/filter.model';
 
 type QueryParams = {
   [x: string]: any;
@@ -55,7 +55,7 @@ export class FiltersService {
   private itemsPerPage = Filter.DEFAULT_ITEMS_PER_PAGE;
 
   readonly presetViews: {
-    [key: string]: () => Partial<Filter>;
+    [key: string]: () => PartialFilter;
   } = {
     currentlyActive: () => ({
       title: '',
@@ -211,7 +211,7 @@ export class FiltersService {
     }
   }
 
-  updateFilters(newFilters: Partial<Filter>): void {
+  updateFilters(newFilters: PartialFilter): void {
     const nextDropdownFilter: Filter = {
       ...this.filter$.value,
       ...newFilters
@@ -227,7 +227,7 @@ export class FiltersService {
    * The preset view will be reapplied in order to account for changes in milestone categories on upstream
    * @param newFilters The filters with new values
    */
-  private updateFiltersWithoutUpdatingPresetView(newFilters: Partial<Filter>): void {
+  private updateFiltersWithoutUpdatingPresetView(newFilters: PartialFilter): void {
     const presetFilters = this.presetViews[this.presetView$.value]();
 
     // Remove filters that should not be reset when labels/milestones are fetched
@@ -243,7 +243,7 @@ export class FiltersService {
     this.filter$.next(nextDropdownFilter);
   }
 
-  private updatePresetViewFromFilters(newFilter: Partial<Filter>): void {
+  private updatePresetViewFromFilters(newFilter: PartialFilter): void {
     for (const key of Object.keys(newFilter)) {
       if (this.presetChangingKeys.has(key)) {
         this.presetView$.next('custom');
