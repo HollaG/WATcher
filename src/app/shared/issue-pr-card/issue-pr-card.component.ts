@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { Filter } from '../../core/models/filter.model';
 import { Issue } from '../../core/models/issue.model';
 import { GithubService } from '../../core/services/github.service';
 import { LabelService } from '../../core/services/label.service';
 import { LoggingService } from '../../core/services/logging.service';
 import { MilestoneService } from '../../core/services/milestone.service';
-import { Filter } from '../../core/models/filter.model';
 
 @Component({
   selector: 'app-issue-pr-card',

@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { Filter } from '../../../core/models/filter.model';
 import { SimpleLabel } from '../../../core/models/label.model';
 import { FiltersService } from '../../../core/services/filters.service';
 import { LabelService } from '../../../core/services/label.service';
 import { LoggingService } from '../../../core/services/logging.service';
-import { Filter } from '../../../core/models/filter.model';
 
 @Component({
   selector: 'app-label-filter-bar',

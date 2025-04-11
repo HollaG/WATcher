@@ -4,19 +4,6 @@ import { ErrorMessageService } from '../services/error-message.service';
 import { EitherOrPreset, GlobalPreset } from './preset.model';
 
 export class Filter {
-  title: string;
-  status: string[];
-  type: string;
-  sort: Sort;
-  labels: string[];
-  milestones: string[];
-  hiddenLabels: Set<string>;
-  deselectedLabels: Set<string>;
-  itemsPerPage: number;
-  assignees: string[];
-
-  public static readonly DEFAULT_ITEMS_PER_PAGE = 20;
-
   // constructor with nothing, for PartialFilters
   constructor();
   // constructor with everything, for full filters
@@ -81,6 +68,18 @@ export class Filter {
     this.itemsPerPage = itemsPerPage || 10;
     this.assignees = assignees || [];
   }
+
+  public static readonly DEFAULT_ITEMS_PER_PAGE = 20;
+  title: string;
+  status: string[];
+  type: string;
+  sort: Sort;
+  labels: string[];
+  milestones: string[];
+  hiddenLabels: Set<string>;
+  deselectedLabels: Set<string>;
+  itemsPerPage: number;
+  assignees: string[];
 
   // public assignProperty(property: keyof Filter, value: any): void {
   //   // @ts-ignore
@@ -309,9 +308,9 @@ export class Filter {
  * PartialFilter is a type that contains only some of the properties of Filter,
  * but still having all the original methods.
  */
-export type PartialFilter = {
-  [K in keyof Filter as Filter[K] extends Function ? K : never]: Filter[K];
-} &
-  {
-    [K in keyof Filter as Filter[K] extends Function ? never : K]?: Filter[K];
-  };
+// export type PartialFilter = {
+//   [K in keyof Filter; as; Filter[K]; extends Function ? K : never;]: Filter[K];
+// } &
+//   {
+//     [K in keyof Filter as Filter[K] extends Function ? never : K]?: Filter[K];
+//   };

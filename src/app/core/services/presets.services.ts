@@ -1,12 +1,12 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Filter } from '../models/filter.model';
 import { EitherOrPreset, GlobalPreset, LocalPreset, Preset } from '../models/preset.model';
 import { Repo } from '../models/repo.model';
 import { ErrorHandlingService } from './error-handling.service';
 import { FiltersService } from './filters.service';
 import { GroupBy, GroupingContextService } from './grouping/grouping-context.service';
 import { LoggingService } from './logging.service';
-import { Filter } from '../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
